@@ -8,6 +8,8 @@ import {ERC721Pausable} from "@openzeppelin/contracts/token/ERC721/extensions/ER
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 
 contract Adhil is ERC721, ERC721Enumerable, ERC721Pausable, Ownable {
+    uint256 private _nextTokenId;
+
     constructor(address initialOwner)
         ERC721("Adhil", "ADH")
         Ownable(initialOwner)
@@ -25,8 +27,10 @@ contract Adhil is ERC721, ERC721Enumerable, ERC721Pausable, Ownable {
         _unpause();
     }
 
-    function safeMint(address to, uint256 tokenId) public onlyOwner {
+    function PublicMint(address to) public   {
+        uint256 tokenId = _nextTokenId++;
         _safeMint(to, tokenId);
+  
     }
 
     // The following functions are overrides required by Solidity.
