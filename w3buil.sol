@@ -10,26 +10,37 @@ import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 contract Adhil is ERC721, ERC721Enumerable, ERC721Pausable, Ownable {
     uint256 private _nextTokenId;
 
-    constructor(address initialOwner)
+    constructor()
         ERC721("Adhil", "ADH")
-        Ownable(initialOwner)
+        Ownable(msg.sender)
     {}
 
     function _baseURI() internal pure override returns (string memory) {
         return "ipfs://QmY5rPqGTN1rZxMQg2ApiSZc7JiBNs1ryDzXPZpQhC1ibm/";
     }
+    
 
-    function pause() public onlyOwner {
-        _pause();
+    // function pause() public onlyOwner {
+        
+    //     _pause();
+    // }
+    function withdraw(address  addr) public   {
+uint256 balace=address(this).balance;
+payable(addr).transfer(balace);
+
+
+
     }
 
-    function unpause() public onlyOwner {
-        _unpause();
-    }
+    // function unpause() public onlyOwner {
+    //     _unpause();
+    // }
 
-    function PublicMint(address to) public   {
+    function PublicMint() public  payable   {
+// require(totalSupply() < 3, "sorry you can't mint more than 3");
+        require(msg.value>0.1 ether , "not. much fund you havce ");
         uint256 tokenId = _nextTokenId++;
-        _safeMint(to, tokenId);
+        _safeMint(msg.sender, tokenId);
   
     }
 
